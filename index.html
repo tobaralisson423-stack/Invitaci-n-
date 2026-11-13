@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XV Años de Scarlet Mishell</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;color:#fff3d5;text-align:center;
+ font-family:Georgia,serif;
+ background:radial-gradient(circle at top,#79458a,#30143e 55%,#10091c);
+ overflow-x:hidden
+}
+#portada{
+ min-height:100vh;display:flex;flex-direction:column;
+ justify-content:center;align-items:center;padding:24px
+}
+h1{color:#ffdf91;font-size:clamp(35px,9vw,55px);text-shadow:0 0 20px #ffca59}
+.sobre{
+ width:260px;height:170px;margin:30px auto;
+ border:3px solid #ffe6a5;border-radius:12px;
+ background:linear-gradient(145deg,#f5d27b,#92501c);
+ box-shadow:0 0 40px #ffcf64;
+ display:flex;align-items:center;justify-content:center;
+ font-size:75px;cursor:pointer;
+ animation:brillo 2s infinite alternate
+}
+@keyframes brillo{to{box-shadow:0 0 70px #ffe9a9}}
+button{
+ border:1px solid #ffe6a5;border-radius:30px;padding:14px 24px;
+ background:linear-gradient(90deg,#a76b25,#f7d987);
+ color:#32153b;font-weight:bold;font-size:16px;margin:8px
+}
+#invitacion{display:none;padding:35px 14px;min-height:100vh}
+.marco{
+ max-width:520px;margin:auto;padding:28px 18px;
+ border:2px solid #eac66e;border-radius:20px;
+ background:linear-gradient(160deg,#492254,#1b1029);
+ box-shadow:0 0 35px #e4b85e
+}
+.dorado{color:#ffdf91}
+.nombre{font-size:clamp(38px,9vw,58px);color:#ffdf91;margin:25px 0;text-shadow:0 0 15px #e4ac51}
+.datos{font-size:21px;line-height:1.8}
+.frase{font-size:18px;line-height:1.6;font-style:italic}
+#humo{
+ display:none;position:fixed;inset:0;pointer-events:none;z-index:5;
+ background:radial-gradient(ellipse at center,#ffffff99,transparent 65%);
+ animation:humo 3s forwards
+}
+@keyframes humo{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.5)}100%{opacity:0;transform:scale(2.5)}}
+.estrella{position:fixed;top:-20px;color:#ffe69a;pointer-events:none;animation:caer linear infinite}
+@keyframes caer{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<section id="portada">
+ <div class="dorado">✧ 🕌 ✧</div>
+ <h1>Una noche de magia</h1>
+ <p>Una celebración digna de un cuento de hadas...</p>
+ <div class="sobre" onclick="abrirInvitacion()">🪔</div>
+ <button onclick="abrirInvitacion()">✨ ABRIR INVITACIÓN ✨</button>
+ <p>Toca el sobre para descubrir la magia</p>
+</section>
+
+<section id="invitacion">
+ <div class="marco">
+  <div class="dorado">✧ ✦ 🕌 ✦ ✧</div>
+  <p class="frase">Con la bendición de Dios y el amor de mi familia, quiero compartir contigo una noche muy especial.</p>
+  <p>Te invito a celebrar mis</p>
+  <div class="nombre">XV Años</div>
+  <h2 class="dorado">SCARLET MISHELL</h2>
+  <div class="dorado">❦</div>
+  <p class="datos">
+   SÁBADO<br>
+   <strong>12 DE DICIEMBRE</strong><br>
+   2026<br><br>
+   <strong>8:00 PM</strong>
+  </p>
+  <div class="dorado">✧ ✦ ✧</div>
+  <p class="datos">Salón de Recepciones<br><strong>Medio Ejido</strong></p>
+  <p>Av. Enrique Arízaga Toral y Francisco Cisneros<br>Cuenca, Ecuador</p>
+  <button onclick="window.open('https://share.google/Ky4QAMwYNoE4yL1te','_blank')">📍 CÓMO LLEGAR</button>
+  <br>
+  <button onclick="window.open('https://wa.me/?text=Confirmo%20mi%20asistencia%20a%20los%20XV%20de%20Scarlet','_blank')">💌 CONFIRMAR ASISTENCIA</button>
+  <p class="frase">Tu presencia hará esta noche aún más mágica.</p>
+  <div class="dorado">🕌 ✨ 🪔 ✨ 🕌</div>
+ </div>
+</section>
+
+<div id="humo"></div>
+
+<audio id="musica" loop>
+ <source src="https://www.youtube.com/watch?v=NcDKnkOJxNY" type="audio/mpeg">
+</audio>
+
+<script>
+let abierta=false;
+function abrirInvitacion(){
+ if(abierta)return;
+ abierta=true;
+ document.getElementById('portada').style.display='none';
+ document.getElementById('invitacion').style.display='block';
+ const humo=document.getElementById('humo');
+ humo.style.display='block';
+ setTimeout(()=>humo.style.display='none',3000);
+ const audio=document.getElementById('musica');
+ audio.play().catch(()=>console.log('El navegador bloqueó la reproducción automática.'));
+ for(let i=0;i<45;i++){
+  const e=document.createElement('div');
+  e.className='estrella';
+  e.textContent=['✦','✧','✨','·'][Math.floor(Math.random()*4)];
+  e.style.left=Math.random()*100+'vw';
+  e.style.animationDuration=(2+Math.random()*4)+'s';
+  e.style.fontSize=(12+Math.random()*22)+'px';
+  document.body.appendChild(e);
+ }
+}
+</script>
+</body>
+</html>
