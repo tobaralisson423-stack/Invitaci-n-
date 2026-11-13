@@ -100,106 +100,31 @@
             display: block; width: 100%; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
             color: #fff; text-decoration: none; padding: 12px; font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.9rem; border-radius: 25px;
         }
-        /* Contenedor oculto para el reproductor de YouTube */
-        #youtube-audio-container {
-            position: absolute;
-            width: 0;
-            height: 0;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
+        .audio-control {
+            position: fixed; top: 15px; right: 15px; background: rgba(18, 8, 38, 0.8);
+            border: 1px solid #d4af37; border-radius: 50%; width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            z-index: 100; box-shadow: 0 0 10px rgba(212,175,55,0.3);
         }
+        .audio-control span { font-size: 1.1rem; animation: pulseAudio 2s infinite; }
+        @keyframes pulseAudio { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
     <div class="sparkles-bg" id="sparklesContainer"></div>
 
-    <!-- Reproductor oculto de YouTube con la música -->
-    <div id="youtube-audio-container">
-        <div id="player"></div>
+    <div class="audio-control" id="audioBtn" onclick="toggleAudio()" style="display: none;">
+        <span id="audioIcon">🎵</span>
     </div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-arabian.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="invitation-container">
         <div id="envelope-screen">
-            <h2 class="envelope-title">Una Noche Mágica</h2>
+            <h2 class="envelope-title">Noches de Arabia</h2>
             <div class="lamp-container" onclick="openInvitation()">
                 <div class="smoke-plume"></div>
                 <svg class="magic-lamp" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 90 C50 90, 70 100, 100 100 C130 100, 150 90, 180 90 C185 90, 190 95, 185 105 C170 115, 30 115, 15 105 C10 95, 15 90, 20 90 Z" fill="#ffd700"/>
-                    <path d="M50 90 C50 60, 80 40, 100 40 C120 40, 150 60, 150 90 Z" fill="url(#lampGrad)" stroke="#ffd700" stroke-width="2"/>
-                    <path d="M90 40 C90 25, 95 15, 100 10 C105 15, 110 25, 110 40 Z" fill="#ffd700"/>
-                    <path d="M150 75 Q180 75, 175 50 Q170 30, 155 35" fill="none" stroke="#ffd700" stroke-width="6" stroke-linecap="round"/>
-                    <defs>
-                        <linearGradient id="lampGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#ffdf73"/>
-                            <stop offset="100%" stop-color="#b8860b"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-            <button class="open-seal-btn" onclick="openInvitation()">Abrir Invitación ✨</button>
-        </div>
-
-        <div class="content-screen" id="contentScreen">
-            <p class="header-sub">MIS XV AÑOS</p>
-            <h1 class="main-title">Scarlet Mishell</h1>
-            <div class="name">Noches de Arabia</div>
-            <p class="message">Hay momentos en la vida que son inolvidables, y compartirlos con las personas que amamos los hace eternos. Te invito a celebrar conmigo esta mágica noche.</p>
-            <div class="event-details">
-                <h3>📅 Fecha y Hora</h3>
-                <p>12 de Diciembre • 8:00 P.M.</p>
-            </div>
-            <div class="event-details">
-                <h3>📍 Lugar</h3>
-                <p><strong>Salón de Eventos Medio Ejido</strong></p>
-                <p>Av. Enrique Arízaga Toral y Francisco Cisneros, Cuenca</p>
-                <a href="https://share.google/Ky4QAMwYNoE4yL1te" target="_blank" class="map-btn">Ver en Google Maps 🗺️</a>
-            </div>
-            <a href="https://wa.me/?text=¡Hola!%20Confirmo%20mi%20asistencia%20a%20los%2015%20años%20de%20Scarlet%20Mishell." target="_blank" class="whatsapp-btn">Confirmar Asistencia 💬</a>
-        </div>
-    </div>
-
-    <!-- Script oficial de YouTube para asegurar la reproducción -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        const container = document.getElementById('sparklesContainer');
-        for (let i = 0; i < 25; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.left = `${Math.random() * 100}vw`;
-            sparkle.style.top = `${Math.random() * -100}px`;
-            const size = Math.random() * 5 + 2;
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
-            sparkle.style.animationDuration = `${Math.random() * 5 + 4}s`;
-            sparkle.style.animationDelay = `${Math.random() * 5}s`;
-            container.appendChild(sparkle);
-        }
-
-        let player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: 'sX8B1c9xL20', // ID de música ambiental compatible
-                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'sX8B1c9xL20' }
-            });
-        }
-
-        function openInvitation() {
-            const envelope = document.getElementById('envelope-screen');
-            const content = document.getElementById('contentScreen');
-            envelope.style.opacity = '0';
-            envelope.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                envelope.style.display = 'none';
-                content.classList.add('active');
-            }, 800);
-
-            if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
-            }
-        }
-    </script>
-</body>
-</html>
+                    <path d="M50 90 C50 60, 80 40, 100 40 C
